@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">AnimeApp</string>
+    <string name="app_name">Anime App</string>
+    <string name="nameForApp">Anime App</string>
+
+    // ActionBarDrawerToggle String
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    //Toolbar string
+    <string name="search_title">Search</string>
+    <string name="sort_title">Sort</string>
+
+    // drawerLayout string
+    <string name="genre_anime">Genre Anime</string>
+    <string name="drama_anime">Drama Anime</string>
+    <string name="fav_anime">Favorites Anime</string>
+    <string name="about_me">About Me</string>
+
+
 </resources>
