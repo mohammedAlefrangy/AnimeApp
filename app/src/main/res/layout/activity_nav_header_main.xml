@@ -20,7 +20,8 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="28dp"
         tools:layout_editor_absoluteY="0dp"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:src="@drawable/imagforanimeposter"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         style="?android:attr/textAppearanceLarge"

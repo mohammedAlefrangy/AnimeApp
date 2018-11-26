@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.nav_header_main"></activity>
+        <activity android:name=".Activity.nav_header_main" />
+        <activity android:name=".dialog_sort"></activity>
     </application>
 
 </manifest>

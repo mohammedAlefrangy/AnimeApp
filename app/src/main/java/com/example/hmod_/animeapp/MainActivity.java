@@ -2,21 +2,28 @@ package com.example.hmod_.animeapp;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-//        NavigationView navigationView = findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
-//        Fresco.initialize(this);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
+        Fresco.initialize(this);
     }
 
 
@@ -54,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
@@ -69,13 +77,24 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawer.openDrawer(GravityCompat.START);  // OPEN DRAWER
-                return true;
+        int id = item.getItemId();
+
+        if (id == R.id.home) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.sort){
+            dialog_sort dialogSort = new dialog_sort();
+            dialogSort.show(getSupportFragmentManager(), "Sort For Anime");
         }
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                drawer.openDrawer(GravityCompat.START);  // OPEN DRAWER
+//                return true;
+//        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -89,5 +108,18 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         toggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.about_me) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
