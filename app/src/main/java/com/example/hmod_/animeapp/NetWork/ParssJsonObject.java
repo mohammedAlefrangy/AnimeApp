@@ -1,8 +1,6 @@
 package com.example.hmod_.animeapp.NetWork;
 
 
-import android.util.Log;
-
 import com.example.hmod_.animeapp.DataEntity.Anime;
 
 import org.json.JSONArray;
@@ -31,23 +29,20 @@ public class ParssJsonObject {
 
                 //get all attributes object
                 JSONObject attributes = animeJsonObj.getJSONObject("attributes");
+                anime.setSynopsis(attributes.get("synopsis").toString());
                 anime.setCanonicalTitle(attributes.get("canonicalTitle").toString());
+                anime.setAverageRating(attributes.get("averageRating").toString());
+                anime.setUserCount((Integer) attributes.get("userCount"));
+                anime.setFavoritesCount((Integer) attributes.get("favoritesCount"));
+                anime.setAgeRatingGuide(attributes.get("ageRatingGuide").toString());
+                anime.setStatus(attributes.get("status").toString());
+                anime.setEpisodeCount((Integer) attributes.get("episodeCount"));
+                anime.setTotalLength((Integer) attributes.get("totalLength"));
+                anime.setYoutubeVideoId(attributes.get("youtubeVideoId").toString());
 
                 // get posterImage object to get image to show in imageView
                 JSONObject posterImage = attributes.getJSONObject("posterImage");
                 anime.setPosterImage(posterImage.get("original"));
-
-
-//                JSONArray attributes = jsonObject.getJSONArray("attributes");
-//                JSONObject animeJson = attributes.getJSONObject(i);
-//                String attributes = animeJsonObj.get("attributes").toString();
-//                anime.setCanonicalTitle(animeJson.get("attributes").toString());
-//                anime.setVoteAverage(Double.valueOf(movieJsonObj.get("canonicalTitle").toString()));
-//                anime.setTitle(movieJsonObj.get("title").toString());
-//                anime.setReleaseDate(movieJsonObj.get("release_date").toString());
-//                anime.setPosterPath("https://image.tmdb.org/t/p/w500" + movieJsonObj.get("poster_path").toString());
-//                anime.setOverview(movieJsonObj.get("overview").toString());
-//                anime.setid(movieJsonObj.get("id").toString());
 
                 animes.add(anime);
             }

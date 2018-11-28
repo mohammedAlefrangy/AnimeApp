@@ -1,7 +1,6 @@
 package com.example.hmod_.animeapp.Adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -113,7 +112,7 @@ public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyView
 //            ));
 //        }
 //    }
-    public void setTasks(ArrayList< Anime > taskEntries) {
+    public void setTasks(ArrayList<Anime> taskEntries) {
         animes = taskEntries;
         notifyDataSetChanged();
     }
