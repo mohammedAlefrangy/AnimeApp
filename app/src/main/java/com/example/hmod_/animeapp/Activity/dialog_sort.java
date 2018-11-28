@@ -1,15 +1,15 @@
-package com.example.hmod_.animeapp;
+package com.example.hmod_.animeapp.Activity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.hmod_.animeapp.R;
 
 public class dialog_sort extends AppCompatDialogFragment {
     private Button ascending_order;
