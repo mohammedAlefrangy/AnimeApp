@@ -8,7 +8,16 @@ public class Anime implements Parcelable {
         private String createdAt;
         private String updatedAt;
         private String synopsis;
-        private Integer coverImageTopOffset;
+
+    public Object getPosterImage() {
+        return posterImage;
+    }
+
+    public void setPosterImage(Object posterImage) {
+        this.posterImage = posterImage;
+    }
+
+    private Object posterImage;
         private String canonicalTitle; //done
         private String averageRating;
         private Integer userCount;
@@ -24,12 +33,12 @@ public class Anime implements Parcelable {
         private String youtubeVideoId;
 
 
-        public Anime(String createdAt, String updatedAt, String synopsis, Integer coverImageTopOffset, String canonicalTitle, String averageRating, Integer userCount, Integer favoritesCount, String startDate, String endDate, Object nextRelease, String ageRatingGuide, String status, Integer episodeCount, Integer episodeLength, Integer totalLength, String youtubeVideoId) {
+        public Anime(String createdAt, String updatedAt, String synopsis, Integer posterImage, String canonicalTitle, String averageRating, Integer userCount, Integer favoritesCount, String startDate, String endDate, Object nextRelease, String ageRatingGuide, String status, Integer episodeCount, Integer episodeLength, Integer totalLength, String youtubeVideoId) {
             super();
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
             this.synopsis = synopsis;
-            this.coverImageTopOffset = coverImageTopOffset;
+            this.posterImage = posterImage;
             this.canonicalTitle = canonicalTitle;
             this.averageRating = averageRating;
             this.userCount = userCount;
@@ -73,13 +82,7 @@ public class Anime implements Parcelable {
             this.synopsis = synopsis;
         }
 
-        public Integer getCoverImageTopOffset() {
-            return coverImageTopOffset;
-        }
 
-        public void setCoverImageTopOffset(Integer coverImageTopOffset) {
-            this.coverImageTopOffset = coverImageTopOffset;
-        }
 
 
         public String getCanonicalTitle() {
@@ -188,7 +191,7 @@ public class Anime implements Parcelable {
 
     @Override
     public String toString() {
-        return String.valueOf(this.getCoverImageTopOffset());
+        return String.valueOf(this.getPosterImage());
     }
 
 
@@ -211,7 +214,7 @@ public class Anime implements Parcelable {
         parcel.writeString(this.youtubeVideoId);
 
 
-        parcel.writeValue(this.coverImageTopOffset);
+//        parcel.writeValue(this.posterImage);/
         parcel.writeValue(this.favoritesCount);
         parcel.writeValue(this.userCount);
         parcel.writeValue(this.episodeCount);
@@ -233,7 +236,7 @@ public class Anime implements Parcelable {
         this.youtubeVideoId = in.readString();
 
 
-        this.coverImageTopOffset = (Integer) in.readValue(Integer.class.getClassLoader());
+//        this.posterImage = in.readValue(Integer.class.getClassLoader());
         this.favoritesCount =(Integer) in.readValue(Integer.class.getClassLoader());
         this.userCount =(Integer) in.readValue(Integer.class.getClassLoader());
         this.episodeCount =(Integer) in.readValue(Integer.class.getClassLoader());

@@ -28,8 +28,14 @@ public class ParssJsonObject {
             for (int i = 0; i < resultsJsonObject.length(); i++) {
                 Anime anime = new Anime();
                 JSONObject animeJsonObj = resultsJsonObject.getJSONObject(i);
+
+                //get all attributes object
                 JSONObject attributes = animeJsonObj.getJSONObject("attributes");
                 anime.setCanonicalTitle(attributes.get("canonicalTitle").toString());
+
+                // get posterImage object to get image to show in imageView
+                JSONObject posterImage = attributes.getJSONObject("posterImage");
+                anime.setPosterImage(posterImage.get("original"));
 
 
 //                JSONArray attributes = jsonObject.getJSONArray("attributes");

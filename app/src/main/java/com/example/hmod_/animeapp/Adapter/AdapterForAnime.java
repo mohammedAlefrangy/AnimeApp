@@ -1,6 +1,7 @@
 package com.example.hmod_.animeapp.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,9 +50,9 @@ public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyView
         String title = item.getCanonicalTitle();
         holder.titleForAnime.setText(title);
         Log.d(TAG, "onBindViewHolder: " + title);
-//        Integer image = item.getCoverImageTopOffset();
+        Object image = item.getPosterImage();
 //
-        Picasso.with(context).load(R.drawable.placeholder).into(holder.imageView);
+        Picasso.with(context).load(String.valueOf(image)).into(holder.imageView);
     }
 
     @Override
