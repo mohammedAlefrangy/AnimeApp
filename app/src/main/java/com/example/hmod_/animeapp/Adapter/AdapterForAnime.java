@@ -1,12 +1,15 @@
 package com.example.hmod_.animeapp.Adapter;
 
 import android.content.Context;
+import android.graphics.ColorSpace;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.hmod_.animeapp.DataEntity.Anime;
@@ -15,14 +18,19 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
-public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyViewHolder> {
+public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyViewHolder> implements Filterable {
 
 
     private ArrayList<Anime> animes;
+    private ArrayList<Anime> animeSearch;
     private final Context context;
     private final OnItemClickListener onItemClickListener;
     private static final String TAG = "AdapterForAnime";
+
+
 
 
     public interface OnItemClickListener {
@@ -34,6 +42,8 @@ public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyView
         this.animes = animes;
         this.context = context;
         this.onItemClickListener = onItemClickListener;
+
+        animeSearch = new ArrayList<>(animes);
     }
 
     @NonNull
@@ -116,6 +126,44 @@ public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyView
         animes = taskEntries;
         notifyDataSetChanged();
     }
+
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Anime> filteredList = new ArrayList<>();
+
+            if (charSequence == null || charSequence.length()==0){
+                filteredList.addAll(animeSearch);
+            }else {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (Anime item : animeSearch){
+                    if (item.getCanonicalTitle().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList ;
+
+            return results ;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            animes.clear();
+            animes.addAll((List)filterResults.values);
+            notifyDataSetChanged();
+
+        }
+    };
 
 
 }

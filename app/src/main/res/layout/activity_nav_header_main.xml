@@ -18,10 +18,11 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:src="@mipmap/ic_launcher_round"
+        android:transitionName="profile"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="0dp"
-        android:src="@drawable/imagforanimeposter"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         style="?android:attr/textAppearanceLarge"

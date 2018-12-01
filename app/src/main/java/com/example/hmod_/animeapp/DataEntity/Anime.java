@@ -1,7 +1,10 @@
 package com.example.hmod_.animeapp.DataEntity;
 
+import android.graphics.ColorSpace;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.Comparator;
 
 public class Anime implements Parcelable {
 
@@ -9,6 +12,7 @@ public class Anime implements Parcelable {
     private String updatedAt;
     private String synopsis;        //done
     private Object posterImage;     //done
+    private Object coverImage;     //done
     private String canonicalTitle;  //done
     private String averageRating;   //done
     private Integer userCount;      //done
@@ -23,13 +27,18 @@ public class Anime implements Parcelable {
     private Integer totalLength;     //done
     private String youtubeVideoId;   //done
 
+    //manga
+    private Integer volumeCount;
+    private String mangaType;
 
-    public Anime(String createdAt, String updatedAt, String synopsis, Integer posterImage, String canonicalTitle, String averageRating, Integer userCount, Integer favoritesCount, String startDate, String endDate, Object nextRelease, String ageRatingGuide, String status, Integer episodeCount, Integer episodeLength, Integer totalLength, String youtubeVideoId) {
+
+    public Anime(String createdAt, String updatedAt, String synopsis, Integer posterImage, Integer coverImage, String canonicalTitle, String averageRating, Integer userCount, Integer favoritesCount, String startDate, String endDate, Object nextRelease, String ageRatingGuide, String status, Integer episodeCount, Integer episodeLength, Integer totalLength, String youtubeVideoId, Integer volumeCount, String mangaType) {
         super();
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.synopsis = synopsis;
         this.posterImage = posterImage;
+        this.coverImage = coverImage;
         this.canonicalTitle = canonicalTitle;
         this.averageRating = averageRating;
         this.userCount = userCount;
@@ -43,6 +52,8 @@ public class Anime implements Parcelable {
         this.episodeLength = episodeLength;
         this.totalLength = totalLength;
         this.youtubeVideoId = youtubeVideoId;
+        this.volumeCount = volumeCount;
+        this.mangaType = mangaType;
     }
 
     public Anime() {
@@ -186,6 +197,30 @@ public class Anime implements Parcelable {
         this.posterImage = posterImage;
     }
 
+    public Object getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(Object coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public Integer getVolumeCount() {
+        return volumeCount;
+    }
+
+    public void setVolumeCount(Integer volumeCount) {
+        this.volumeCount = volumeCount;
+    }
+
+    public String getMangaType() {
+        return mangaType;
+    }
+
+    public void setMangaType(String mangaType) {
+        this.mangaType = mangaType;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(this.getPosterImage());
@@ -251,6 +286,20 @@ public class Anime implements Parcelable {
         @Override
         public Anime[] newArray(int size) {
             return new Anime[size];
+        }
+    };
+
+    public static final Comparator<Anime> BY_TITLE_ASCENDING = new Comparator<Anime>() {
+        @Override
+        public int compare(Anime anime, Anime t1) {
+            return anime.getCanonicalTitle().compareTo(t1.getCanonicalTitle());
+        }
+    };
+
+    public static final Comparator<Anime> BY_TITLE_DESCENDING = new Comparator<Anime>() {
+        @Override
+        public int compare(Anime anime, Anime t1) {
+            return t1.getCanonicalTitle().compareTo(anime.getCanonicalTitle());
         }
     };
 

@@ -2,28 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-        <item
-            android:id="@+id/drama_anime"
-            android:icon="@drawable/ic_movie"
-            android:title="@string/drama_anime" />
+    <item
+        android:id="@+id/anime"
+        android:icon="@drawable/ic_movie"
+        android:title="@string/anime" />
 
-        <item
-            android:id="@+id/genre_anime"
-            android:icon="@drawable/ic_filmstrip"
-            android:title="@string/genre_anime" />
+    <item
+        android:id="@+id/manga"
+        android:icon="@drawable/ic_filmstrip"
+        android:title="@string/manga" />
 
-        <item
-            android:id="@+id/fav_anime"
-            android:icon="@drawable/ic_heart"
-            android:title="@string/fav_anime" />
+    <item
+        android:id="@+id/fav_anime"
+        android:icon="@drawable/ic_heart"
+        android:title="@string/fav_anime" />
 
-        <item
-            android:id="@+id/about_me"
-            android:icon="@drawable/ic_information"
-            android:title="@string/about_me" />
-
-
-
+    <item
+        android:id="@+id/about_me"
+        android:icon="@drawable/ic_information"
+        android:title="@string/about_me" />
 
 
 </menu>

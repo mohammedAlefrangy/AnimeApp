@@ -1,7 +1,10 @@
 package com.example.hmod_.animeapp.NetWork;
 
 
+import android.util.Log;
+
 import com.example.hmod_.animeapp.DataEntity.Anime;
+import com.example.hmod_.animeapp.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,13 +39,24 @@ public class ParssJsonObject {
                 anime.setFavoritesCount((Integer) attributes.get("favoritesCount"));
                 anime.setAgeRatingGuide(attributes.get("ageRatingGuide").toString());
                 anime.setStatus(attributes.get("status").toString());
-                anime.setEpisodeCount((Integer) attributes.get("episodeCount"));
-                anime.setTotalLength((Integer) attributes.get("totalLength"));
-                anime.setYoutubeVideoId(attributes.get("youtubeVideoId").toString());
 
                 // get posterImage object to get image to show in imageView
                 JSONObject posterImage = attributes.getJSONObject("posterImage");
                 anime.setPosterImage(posterImage.get("original"));
+
+
+                if (MainActivity.urlAnime.equals(NetworkUtils.getAnimeULR())) {
+                    anime.setYoutubeVideoId(attributes.get("youtubeVideoId").toString());
+//                    anime.setEpisodeCount(attributes.get("episodeCount"));
+//                    anime.setEpisodeLength((Integer) attributes.get("episodeLength"));
+//                    anime.setTotalLength((Integer) attributes.get("totalLength"));
+                    Log.d(TAG, "extractFromJSON: " + attributes.get("youtubeVideoId").toString());
+
+                } else {
+                    anime.setVolumeCount((Integer) attributes.get("volumeCount"));
+                    anime.setMangaType(attributes.get("mangaType").toString());
+                    Log.d(TAG, "extractFromJSON: " + attributes.get("mangaType").toString());
+                }
 
                 animes.add(anime);
             }

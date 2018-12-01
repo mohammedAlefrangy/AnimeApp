@@ -2,8 +2,8 @@ package com.example.hmod_.animeapp.Activity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +24,7 @@ public class dialog_sort extends AppCompatDialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View view =inflater.inflate(R.layout.activity_dialog_sort, null) ;
+        View view = inflater.inflate(R.layout.activity_dialog_sort, null);
         builder.setView(view)
                 // Add action buttons
                 .setTitle("Sort For Anime")
@@ -36,7 +36,39 @@ public class dialog_sort extends AppCompatDialogFragment {
 
         ascending_order = view.findViewById(R.id.ascending_order);
         descending_order = view.findViewById(R.id.descending_order);
+
+        if (ascending_order.isClickable()){
+            ascendingOrderClicked();
+        }else if(descending_order.isClickable()){
+            descendingOrderClicked();
+        }
+
+
         return builder.create();
 
     }
+
+    private void descendingOrderClicked() {
+
+        descending_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+    }
+
+    private void ascendingOrderClicked() {
+
+        ascending_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+    }
+
+
 }

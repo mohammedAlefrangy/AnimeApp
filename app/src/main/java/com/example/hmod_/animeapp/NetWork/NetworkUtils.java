@@ -16,7 +16,6 @@
 package com.example.hmod_.animeapp.NetWork;
 
 import android.net.Uri;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,18 +29,18 @@ public final class NetworkUtils {
 
 
     private final static String ANIME_BASE_URL = "https://kitsu.io/api/edge";
-    private final static String GRNRES = "/genres/";
+    private final static String MANGA = "/manga/";
     private final static String ANIME = "/anime/";
 
-    private final String API_KEY_PARAM = "api_key";
+    private static final String API_KEY_PARAM = "api_key";
     //TODO (1) insert your api_key here
-    private final String KEY = "366cf8abb96a69210ca41107bcbb421e";
+    private static final String KEY = "366cf8abb96a69210ca41107bcbb421e";
 
     public NetworkUtils() {
     }
 
 
-    public URL getAnimeULR() {
+    public static URL getAnimeULR() {
         Uri builtUri = Uri.parse(ANIME_BASE_URL + ANIME).buildUpon()
                 .appendQueryParameter(API_KEY_PARAM, KEY)
                 .build();
@@ -56,8 +55,8 @@ public final class NetworkUtils {
         return url;
     }
 
-    public URL getGrenresULR() {
-        Uri builtUri = Uri.parse(ANIME_BASE_URL + GRNRES).buildUpon()
+    public URL getMangaULR() {
+        Uri builtUri = Uri.parse(ANIME_BASE_URL + MANGA).buildUpon()
                 .appendQueryParameter(API_KEY_PARAM, KEY)
                 .build();
 

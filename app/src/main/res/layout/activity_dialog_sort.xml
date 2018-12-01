@@ -14,8 +14,7 @@
     <Button
         android:id="@+id/descending_order"
         style="@style/buttonForDialoge"
-        android:text="Descending Order"
-        />
+        android:text="Descending Order" />
 
     <Button
         android:id="@+id/follower_count"
