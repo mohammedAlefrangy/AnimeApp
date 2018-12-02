@@ -2,6 +2,8 @@ package com.example.hmod_.animeapp;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,16 +11,20 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -31,21 +37,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hmod_.animeapp.Activity.detail_activity;
-import com.example.hmod_.animeapp.Activity.dialog_sort;
 import com.example.hmod_.animeapp.Adapter.AdapterForAnime;
+import com.example.hmod_.animeapp.DataBase.FavoritesaAnimeEntity;
+import com.example.hmod_.animeapp.DataBase.ViewModel;
 import com.example.hmod_.animeapp.DataEntity.Anime;
 import com.example.hmod_.animeapp.NetWork.NetworkUtils;
 import com.example.hmod_.animeapp.NetWork.ParssJsonObject;
 import com.example.hmod_.animeapp.fragment.fragment_detail;
 import com.example.hmod_.animeapp.fragment.fragment_image;
 import com.example.hmod_.animeapp.fragment.fragment_video;
+import com.example.hmod_.animeapp.widget.AnimeAppWidget;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterForAnime.OnItemClickListener {
@@ -64,29 +75,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private AdapterForAnime.OnItemClickListener onItemClickListener;
     private RecyclerView recyclerView;
     GridLayoutManager layoutManager;
+
     private AdapterForAnime animeAdapter;
     private ArrayList<Anime> animes;
     TextView movieTitle;
+    private AdView mAdView;
+
+    private String CURRUNT_STAT;
+    private String ANIME_STAT = "anime";
+    private String MANGA_STAT = "manga";
+    private String FAVORITES_STAT = "FAVORITES";
+    private static final String SCROLL_POSITION_KEY = "scroll_position";
+    private Parcelable mListState;
+    private static int mCurrentPostion = 0;
+    private boolean m600MobileWidth;
+
 
     SharedPreferences sharedPreferences;
+    public static String YOUR_ACTION = "YourAction";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MobileAds.initialize(this, "ca-app-pub-5596225914213899~8431965152");
+
 
         onItemClickListener = this;
         sharedPreferences = this.getSharedPreferences("MY_Data", MODE_PRIVATE);
 
         recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+//        layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+//        recyclerView.setLayoutManager(layoutManager);
 
         animes = new ArrayList<>();
         animeAdapter = new AdapterForAnime(animes, getApplicationContext(), onItemClickListener);
-        recyclerView.setAdapter(animeAdapter);
+//        recyclerView.setAdapter(animeAdapter);
+
+        int orientation = getResources().getConfiguration().orientation ;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // In landscape
+            layoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(animeAdapter);
+        } else {
+            // In portrait
+            layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(animeAdapter);
+        }
+
 
         String mSortSettings = sharedPreferences.getString("Sort", "ascending");
         if (mSortSettings.equals("ascending")) {
@@ -94,6 +134,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (mSortSettings.equals("descending")) {
             Collections.sort(animes, Anime.BY_TITLE_DESCENDING);
         }
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mAdView.loadAd(adRequest);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -118,14 +164,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
         Fresco.initialize(this);
 
+        // to check if wifi is connect or not
         isNetworkConnected();
         if (isWifiConn == true) {
-            getManga();
+            getAnime();
         } else {
             Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
         }
+
+        // saveInstanceMethod method to scroll position the recycler view
+        saveInstanceMethod(savedInstanceState);
+
     }
 
+    // saveInstanceMethod method to check if key equal animeStat or mangaStat and getAnimr or mangaAnim method and show data
+    private void saveInstanceMethod(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateKey1: " + CURRUNT_STAT);
+        if (savedInstanceState != null && savedInstanceState.getString("KEY") != null) {
+            Log.d(TAG, "onCreateKey2: " + savedInstanceState.getString("KEY"));
+            if (savedInstanceState.getString("KEY").equals(ANIME_STAT)) {
+                Log.d(TAG, "onCreateKey3: " + ANIME_STAT);
+                getAnime();
+            } else if (savedInstanceState.getString("KEY").equals(MANGA_STAT)) {
+                Log.d(TAG, "onCreateKey4: " + MANGA_STAT);
+                getManga();
+            }
+        } else {
+            Log.d(TAG, "onCreateKey5: " + "mohammed");
+            //default state
+            getAnime();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("KEY", CURRUNT_STAT);
+        int positin = ((GridLayoutManager) (recyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
+        outState.putInt(SCROLL_POSITION_KEY, positin);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        // Retrieve list state and list/item positions
+        if (state != null) {
+            mCurrentPostion = state.getInt(SCROLL_POSITION_KEY, 0);
+            Log.d(TAG, "onRestoreInstanceState: " + mCurrentPostion);
+        }
+    }
 
     private void openMovieDetailsView(int pos) {
         Bundle bundle = null;
@@ -136,14 +223,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 //        ActivityOptionsCompat  options  = ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, imageView.getTransitionName());
 
-        intent.putExtra(detail_activity.IMAGE_POSTER, (String) animes.get(pos).getPosterImage());
+        intent.putExtra(String.valueOf(detail_activity.IMAGE_POSTER), (String) animes.get(pos).getPosterImage());
 //        bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle();
 //        context.startActivity(intent, options.toBundle());
 
         intent.putExtra(detail_activity.CANONICAL_TITLE, animes.get(pos).getCanonicalTitle());
+        intent.putExtra(detail_activity.MOVIE_ID, animes.get(pos).getId());
+
 
         intent.putExtra(fragment_detail.CANONICAL_TITLE, animes.get(pos).getCanonicalTitle());
         intent.putExtra(fragment_detail.SYNOSIS, animes.get(pos).getSynopsis());
+        intent.putExtra(fragment_detail.CREATED_AT, animes.get(pos).getCreatedAt());
         intent.putExtra(String.valueOf(fragment_detail.USER_FAV), animes.get(pos).getFavoritesCount());
         intent.putExtra(String.valueOf(fragment_detail.USER_COUNT), animes.get(pos).getUserCount());
 
@@ -265,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int menuItemThatSelected = item.getItemId();
-
+        mCurrentPostion = 0;
         switch (menuItemThatSelected) {
             //if click on anime item in menu the app show anime
             case R.id.anime:
@@ -278,11 +368,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             //if click on fav_anime item in menu the app show fav_anime
             case R.id.fav_anime:
-
+                getFavoritesMovies();
                 break;
 
             case R.id.about_me:
-
+                aboutMe();
                 break;
             default:
                 Context context2 = MainActivity.this;
@@ -293,6 +383,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return super.onOptionsItemSelected(item);
     }
+
+    private void aboutMe() {
+        String[] options = {"Facebook Acount", "Linkedin Acount" , "Github Acount" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("About Me");
+        builder.setIcon(R.drawable.ic_information);
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (i == 0) {
+                    Uri uri = Uri.parse("https://www.facebook.com/MohamedALEfrangy");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                if (i == 1) {
+                    Uri uri = Uri.parse("https://www.linkedin.com/in/mohamed-alefrangy/");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                if (i == 2) {
+                    Uri uri = Uri.parse("https://github.com/mohammedAlefrangy");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+            }
+        });
+        builder.create().show();
+
+    }
+
 
     public boolean isNetworkConnected() {
 
@@ -311,35 +431,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "onListItemClick: " + animes.get(clickedItemIndex).getYoutubeVideoId());
         openMovieDetailsView(clickedItemIndex);
     }
-
-    private void getAnime() {
-
-        isNetworkConnected();
-        if (isWifiConn == true) {
-            networkHandler = new NetworkUtils();
-            urlAnime = networkHandler.getAnimeULR();
-            Log.d(TAG, "get: " + urlAnime);
-            fetchAnimeTask = new FetchAnimesTask();
-            fetchAnimeTask.execute();
-        } else {
-            Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void getManga() {
-
-        isNetworkConnected();
-        if (isWifiConn == true) {
-            networkHandler = new NetworkUtils();
-            urlAnime = networkHandler.getMangaULR();
-            Log.d(TAG, "get: " + urlAnime);
-            fetchAnimeTask = new FetchAnimesTask();
-            fetchAnimeTask.execute();
-        } else {
-            Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     class FetchAnimesTask extends AsyncTask<String, Void, ArrayList<Anime>> {
         ArrayList<Anime> arrayList;
@@ -368,7 +459,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(ArrayList<Anime> animeFilm) {
-            Log.d(TAG, "onPostExecute: " + animeFilm);
             isNetworkConnected();
             if (isWifiConn == true) {
                 super.onPostExecute(animeFilm);
@@ -376,13 +466,68 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d(TAG, "onPostExecute: " + animes);
                 if (animeFilm != null) {
                     animeAdapter.setTasks(animes);
-//                    recyclerView.scrollToPosition(mCurrentPostion);
-//                    movieAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "onPostExecutemCurrentPostion: " + mCurrentPostion);
+                    recyclerView.scrollToPosition(mCurrentPostion);
+//                    animeAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
+
+
+    private void getAnime() {
+        CURRUNT_STAT = ANIME_STAT;
+        Log.d(TAG, "getAnimeCURRUNT_STAT: " + CURRUNT_STAT);
+
+        isNetworkConnected();
+        if (isWifiConn == true) {
+            networkHandler = new NetworkUtils();
+            urlAnime = networkHandler.getAnimeULR();
+            Log.d(TAG, "get: " + urlAnime);
+            fetchAnimeTask = new FetchAnimesTask();
+            fetchAnimeTask.execute();
+        } else {
+            Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getManga() {
+        CURRUNT_STAT = MANGA_STAT;
+        Log.d(TAG, "getMangaCURRUNT_STAT: " + CURRUNT_STAT);
+
+        isNetworkConnected();
+        if (isWifiConn == true) {
+            networkHandler = new NetworkUtils();
+            urlAnime = networkHandler.getMangaULR();
+            Log.d(TAG, "get: " + urlAnime);
+            fetchAnimeTask = new FetchAnimesTask();
+            fetchAnimeTask.execute();
+        } else {
+            Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void getFavoritesMovies() {
+        CURRUNT_STAT = FAVORITES_STAT;
+        Log.d(TAG, "getFavoritesMovies: " + CURRUNT_STAT + FAVORITES_STAT);
+        ViewModel viewModel = ViewModelProviders.of(this).get(ViewModel.class);
+//        LiveData<List<FavoritesaAnimeEntity>> favMovieEntities = FavoritesMoviesDatabase.getsInstance(this).favoritesMovieDao().loadAllMovies();
+        viewModel.getTasks().observe(this, new Observer<List<FavoritesaAnimeEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<FavoritesaAnimeEntity> favMovieEntitiy) {
+                animeAdapter.clear();
+                if (favMovieEntitiy == null)
+                    return;
+                FavoritesaAnimeEntity[] courses = new FavoritesaAnimeEntity[favMovieEntitiy.size()];
+                for (int i = 0; i < favMovieEntitiy.size(); i++)
+                    courses[i] = favMovieEntitiy.get(i);
+                animeAdapter.addAllFavorites(favMovieEntitiy);
+
+            }
+        });
+    }
+
 
 }

@@ -28,6 +28,9 @@
     <string name="detail">Detail</string>
     <string name="videos">Videos</string>
     <string name="images">Images</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="favorite_anime">Favorite Anime</string>
 
 
 </resources>

@@ -29,20 +29,20 @@ public class ParssJsonObject {
             for (int i = 0; i < resultsJsonObject.length(); i++) {
                 Anime anime = new Anime();
                 JSONObject animeJsonObj = resultsJsonObject.getJSONObject(i);
+                anime.setId((String) animeJsonObj.get("id"));
+
 
                 //get all attributes object
                 JSONObject attributes = animeJsonObj.getJSONObject("attributes");
                 anime.setSynopsis(attributes.get("synopsis").toString());
                 anime.setCanonicalTitle(attributes.get("canonicalTitle").toString());
-                anime.setAverageRating(attributes.get("averageRating").toString());
                 anime.setUserCount((Integer) attributes.get("userCount"));
                 anime.setFavoritesCount((Integer) attributes.get("favoritesCount"));
-                anime.setAgeRatingGuide(attributes.get("ageRatingGuide").toString());
-                anime.setStatus(attributes.get("status").toString());
+                anime.setCreatedAt(attributes.get("createdAt").toString());
 
                 // get posterImage object to get image to show in imageView
                 JSONObject posterImage = attributes.getJSONObject("posterImage");
-                anime.setPosterImage(posterImage.get("original"));
+                anime.setPosterImage(String.valueOf(posterImage.get("original")));
 
 
                 if (MainActivity.urlAnime.equals(NetworkUtils.getAnimeULR())) {
@@ -53,8 +53,6 @@ public class ParssJsonObject {
                     Log.d(TAG, "extractFromJSON: " + attributes.get("youtubeVideoId").toString());
 
                 } else {
-                    anime.setVolumeCount((Integer) attributes.get("volumeCount"));
-                    anime.setMangaType(attributes.get("mangaType").toString());
                     Log.d(TAG, "extractFromJSON: " + attributes.get("mangaType").toString());
                 }
 

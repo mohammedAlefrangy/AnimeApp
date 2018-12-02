@@ -12,6 +12,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.example.hmod_.animeapp.DataBase.FavoritesaAnimeEntity;
 import com.example.hmod_.animeapp.DataEntity.Anime;
 import com.example.hmod_.animeapp.R;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -29,8 +30,6 @@ public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyView
     private final Context context;
     private final OnItemClickListener onItemClickListener;
     private static final String TAG = "AdapterForAnime";
-
-
 
 
     public interface OnItemClickListener {
@@ -58,7 +57,6 @@ public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyView
         Anime item = animes.get(position);
         String title = item.getCanonicalTitle();
         holder.titleForAnime.setText(title);
-        Log.d(TAG, "onBindViewHolder: " + title);
         Object image = item.getPosterImage();
 //
         Picasso.with(context).load(String.valueOf(image)).into(holder.imageView);
@@ -83,16 +81,13 @@ public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyView
 
         }
 
-
         @Override
         public void onClick(View view) {
             int clickedPosition = getAdapterPosition();
             onItemClickListener.onListItemClick(clickedPosition);
         }
 
-
     }
-
 
     public void clear() {
         animes.clear();
@@ -114,14 +109,16 @@ public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyView
 //        }
 //    }
 //
-//    public void addAllFavorites(List<FavoritesMovieEntity> favoritesMovieEntities) {
-//        for (FavoritesMovieEntity favoritesMovieEntity : favoritesMovieEntities) {
-//            addMovie(new Movie(favoritesMovieEntity.getOverViewForMovie(), favoritesMovieEntity.getPosterForMovie(),
-//                    favoritesMovieEntity.getReleaseDateForMovie(), favoritesMovieEntity.getNameForMovie(),
-//                    favoritesMovieEntity.getVoteAverageForMovie(), String.valueOf(favoritesMovieEntity.getIdForMovie())
-//            ));
-//        }
-//    }
+    public void addAllFavorites(List<FavoritesaAnimeEntity> favoritesAnimeEntities) {
+        for (FavoritesaAnimeEntity favoritesAnimeEntity : favoritesAnimeEntities) {
+            addِAnime(new Anime(favoritesAnimeEntity.getId() , favoritesAnimeEntity.getCreatedAt() ,favoritesAnimeEntity.getSynopsis(),
+                    favoritesAnimeEntity.getPosterImage(),
+                    favoritesAnimeEntity.getCanonicalTitle(),favoritesAnimeEntity.getUserCount() , favoritesAnimeEntity.getFavoritesCount()
+                    ,favoritesAnimeEntity.getYoutubeVideoId() )
+            );
+        }
+    }
+
     public void setTasks(ArrayList<Anime> taskEntries) {
         animes = taskEntries;
         notifyDataSetChanged();
@@ -138,28 +135,28 @@ public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyView
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<Anime> filteredList = new ArrayList<>();
 
-            if (charSequence == null || charSequence.length()==0){
+            if (charSequence == null || charSequence.length() == 0) {
                 filteredList.addAll(animeSearch);
-            }else {
+            } else {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
 
-                for (Anime item : animeSearch){
-                    if (item.getCanonicalTitle().toLowerCase().contains(filterPattern)){
+                for (Anime item : animeSearch) {
+                    if (item.getCanonicalTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
             }
 
             FilterResults results = new FilterResults();
-            results.values = filteredList ;
+            results.values = filteredList;
 
-            return results ;
+            return results;
         }
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             animes.clear();
-            animes.addAll((List)filterResults.values);
+            animes.addAll((List) filterResults.values);
             notifyDataSetChanged();
 
         }

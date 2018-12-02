@@ -8,52 +8,36 @@ import java.util.Comparator;
 
 public class Anime implements Parcelable {
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
     private String createdAt;
-    private String updatedAt;
     private String synopsis;        //done
-    private Object posterImage;     //done
-    private Object coverImage;     //done
+    private String posterImage;     //done
     private String canonicalTitle;  //done
-    private String averageRating;   //done
     private Integer userCount;      //done
     private Integer favoritesCount; //done
-    private String startDate;
-    private String endDate;
-    private Object nextRelease;      //done
-    private String ageRatingGuide;   //done
-    private String status;           //done
-    private Integer episodeCount;    //done
-    private Integer episodeLength;   //done
-    private Integer totalLength;     //done
     private String youtubeVideoId;   //done
 
-    //manga
-    private Integer volumeCount;
-    private String mangaType;
 
-
-    public Anime(String createdAt, String updatedAt, String synopsis, Integer posterImage, Integer coverImage, String canonicalTitle, String averageRating, Integer userCount, Integer favoritesCount, String startDate, String endDate, Object nextRelease, String ageRatingGuide, String status, Integer episodeCount, Integer episodeLength, Integer totalLength, String youtubeVideoId, Integer volumeCount, String mangaType) {
+    public Anime( String id,String createdAt, String synopsis, String posterImage, String canonicalTitle, Integer userCount, Integer favoritesCount, String youtubeVideoId) {
         super();
+        this.id = id;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.synopsis = synopsis;
         this.posterImage = posterImage;
-        this.coverImage = coverImage;
         this.canonicalTitle = canonicalTitle;
-        this.averageRating = averageRating;
         this.userCount = userCount;
         this.favoritesCount = favoritesCount;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.nextRelease = nextRelease;
-        this.ageRatingGuide = ageRatingGuide;
-        this.status = status;
-        this.episodeCount = episodeCount;
-        this.episodeLength = episodeLength;
-        this.totalLength = totalLength;
         this.youtubeVideoId = youtubeVideoId;
-        this.volumeCount = volumeCount;
-        this.mangaType = mangaType;
+
+
     }
 
     public Anime() {
@@ -66,14 +50,6 @@ public class Anime implements Parcelable {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public String getSynopsis() {
@@ -93,14 +69,6 @@ public class Anime implements Parcelable {
         this.canonicalTitle = canonicalTitle;
     }
 
-    public String getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(String averageRating) {
-        this.averageRating = averageRating;
-    }
-
     public Integer getUserCount() {
         return userCount;
     }
@@ -117,69 +85,6 @@ public class Anime implements Parcelable {
         this.favoritesCount = favoritesCount;
     }
 
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
-    public Object getNextRelease() {
-        return nextRelease;
-    }
-
-    public void setNextRelease(Object nextRelease) {
-        this.nextRelease = nextRelease;
-    }
-
-    public String getAgeRatingGuide() {
-        return ageRatingGuide;
-    }
-
-    public void setAgeRatingGuide(String ageRatingGuide) {
-        this.ageRatingGuide = ageRatingGuide;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getEpisodeCount() {
-        return episodeCount;
-    }
-
-    public void setEpisodeCount(Integer episodeCount) {
-        this.episodeCount = episodeCount;
-    }
-
-    public Integer getEpisodeLength() {
-        return episodeLength;
-    }
-
-    public void setEpisodeLength(Integer episodeLength) {
-        this.episodeLength = episodeLength;
-    }
-
-    public Integer getTotalLength() {
-        return totalLength;
-    }
-
-    public void setTotalLength(Integer totalLength) {
-        this.totalLength = totalLength;
-    }
 
     public String getYoutubeVideoId() {
         return youtubeVideoId;
@@ -189,37 +94,14 @@ public class Anime implements Parcelable {
         this.youtubeVideoId = youtubeVideoId;
     }
 
-    public Object getPosterImage() {
+    public String getPosterImage() {
         return posterImage;
     }
 
-    public void setPosterImage(Object posterImage) {
+    public void setPosterImage(String posterImage) {
         this.posterImage = posterImage;
     }
 
-    public Object getCoverImage() {
-        return coverImage;
-    }
-
-    public void setCoverImage(Object coverImage) {
-        this.coverImage = coverImage;
-    }
-
-    public Integer getVolumeCount() {
-        return volumeCount;
-    }
-
-    public void setVolumeCount(Integer volumeCount) {
-        this.volumeCount = volumeCount;
-    }
-
-    public String getMangaType() {
-        return mangaType;
-    }
-
-    public void setMangaType(String mangaType) {
-        this.mangaType = mangaType;
-    }
 
     @Override
     public String toString() {
@@ -235,45 +117,28 @@ public class Anime implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(this.createdAt);
-        parcel.writeString(this.updatedAt);
+        parcel.writeValue(this.id);
+
         parcel.writeString(this.synopsis);
         parcel.writeString(this.canonicalTitle);
-        parcel.writeString(this.averageRating);
-        parcel.writeString(this.startDate);
-        parcel.writeString(this.endDate);
-        parcel.writeString(this.ageRatingGuide);
-        parcel.writeString(this.status);
         parcel.writeString(this.youtubeVideoId);
-
 
 //        parcel.writeValue(this.posterImage);/
         parcel.writeValue(this.favoritesCount);
         parcel.writeValue(this.userCount);
-        parcel.writeValue(this.episodeCount);
-        parcel.writeValue(this.episodeLength);
-        parcel.writeValue(this.totalLength);
     }
 
 
     protected Anime(Parcel in) {
+        this.id = in.readString();
         this.createdAt = in.readString();
-        this.updatedAt = in.readString();
         this.synopsis = in.readString();
         this.canonicalTitle = in.readString();
-        this.averageRating = in.readString();
-        this.startDate = in.readString();
-        this.endDate = in.readString();
-        this.ageRatingGuide = in.readString();
-        this.status = in.readString();
         this.youtubeVideoId = in.readString();
-
 
 //        this.posterImage = in.readValue(Integer.class.getClassLoader());
         this.favoritesCount = (Integer) in.readValue(Integer.class.getClassLoader());
         this.userCount = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.episodeCount = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.episodeLength = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.totalLength = (Integer) in.readValue(Integer.class.getClassLoader());
 
     }
 

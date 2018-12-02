@@ -75,7 +75,6 @@
                                 android:layout_marginRight="8dp"
                                 android:drawableLeft="@drawable/ic_date"
                                 android:drawablePadding="8dp"
-                                android:text="15/5/2020"
                                 android:textColor="#fff"
                                 android:textSize="20sp" />
 
@@ -87,7 +86,6 @@
                                 android:layout_margin="10dp"
                                 android:drawableLeft="@drawable/ic_like"
                                 android:drawablePadding="8dp"
-                                android:text="4584"
                                 android:textColor="#fff"
                                 android:textSize="20sp" />
 
@@ -98,7 +96,6 @@
                                 android:layout_margin="10dp"
                                 android:drawableLeft="@drawable/ic_account"
                                 android:drawablePadding="8dp"
-                                android:text="1584"
                                 android:textColor="#fff"
                                 android:textSize="20sp" />
 

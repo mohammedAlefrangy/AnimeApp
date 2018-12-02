@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.hmod_.animeapp.Activity.detail_activity;
+import com.example.hmod_.animeapp.NetWork.DateTimeHelper;
 import com.example.hmod_.animeapp.R;
 
 public class fragment_detail extends Fragment {
@@ -57,7 +58,7 @@ public class fragment_detail extends Fragment {
 
         cononical_title = rootView.findViewById(R.id.cononical_title);
         synopsis = rootView.findViewById(R.id.synopsis);
-//        created_at = rootView.findViewById(R.id.created_at);
+        created_at = rootView.findViewById(R.id.created_at);
         user_fav = rootView.findViewById(R.id.user_fav);
         user_count = rootView.findViewById(R.id.user_count);
 
@@ -83,7 +84,7 @@ public class fragment_detail extends Fragment {
 
             cononical_title.setText(getString(R.string.cononical_title) + ": " + intentThatStartedThisActivity.getStringExtra(CANONICAL_TITLE));
             synopsis.setText(getString(R.string.synopsis)+":\n\n" + intentThatStartedThisActivity.getStringExtra(SYNOSIS));
-//            created_at.setText(getString(R.string.created_at) + DateTimeHelper.parseDate(intentThatStartedThisActivity.getStringExtra(CREATED_AT)) + "");
+            created_at.setText(getString(R.string.created_at)+ ": " + DateTimeHelper.parseDate(intentThatStartedThisActivity.getStringExtra(CREATED_AT)) + "");
             user_fav.setText(getString(R.string.user_fav) + ": " + intentThatStartedThisActivity.getIntExtra(String.valueOf(USER_FAV), 0));
             user_count.setText(getString(R.string.user_count) + ": " + intentThatStartedThisActivity.getIntExtra(String.valueOf(USER_COUNT), 0));
 
