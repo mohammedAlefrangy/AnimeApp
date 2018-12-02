@@ -1,10 +1,8 @@
 package com.example.hmod_.animeapp.Adapter;
 
 import android.content.Context;
-import android.graphics.ColorSpace;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class AdapterForAnime extends RecyclerView.Adapter<AdapterForAnime.MyViewHolder> implements Filterable {

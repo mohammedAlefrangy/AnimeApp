@@ -3,6 +3,7 @@ package com.example.hmod_.animeapp.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -18,6 +19,7 @@ import com.example.hmod_.animeapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class fragment_image extends Fragment {
 
@@ -49,13 +51,13 @@ public class fragment_image extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_fragment_image, container, false);
-        intentThatStartedThisActivity = getActivity().getIntent();
+        intentThatStartedThisActivity = Objects.requireNonNull(getActivity()).getIntent();
 
-        ((detail_activity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((detail_activity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(((detail_activity) getActivity()).getSupportActionBar()).setHomeButtonEnabled(true);
+        Objects.requireNonNull(((detail_activity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
         collapsingToolbar = getActivity().findViewById(R.id.toolbar_layout);

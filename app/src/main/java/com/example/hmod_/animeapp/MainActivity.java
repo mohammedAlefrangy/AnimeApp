@@ -24,7 +24,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -46,7 +45,6 @@ import com.example.hmod_.animeapp.NetWork.ParssJsonObject;
 import com.example.hmod_.animeapp.fragment.fragment_detail;
 import com.example.hmod_.animeapp.fragment.fragment_image;
 import com.example.hmod_.animeapp.fragment.fragment_video;
-import com.example.hmod_.animeapp.widget.AnimeAppWidget;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -57,6 +55,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterForAnime.OnItemClickListener {
@@ -143,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.app_name));
         getSupportActionBar().setHomeButtonEnabled(true);
 
         //Definition of  the drawerLayout
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
+        navigationView.setNavigationItemSelectedListener(this);
         Fresco.initialize(this);
 
         // to check if wifi is connect or not
@@ -182,10 +181,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "onCreateKey1: " + CURRUNT_STAT);
         if (savedInstanceState != null && savedInstanceState.getString("KEY") != null) {
             Log.d(TAG, "onCreateKey2: " + savedInstanceState.getString("KEY"));
-            if (savedInstanceState.getString("KEY").equals(ANIME_STAT)) {
+            if (Objects.requireNonNull(savedInstanceState.getString("KEY")).equals(ANIME_STAT)) {
                 Log.d(TAG, "onCreateKey3: " + ANIME_STAT);
                 getAnime();
-            } else if (savedInstanceState.getString("KEY").equals(MANGA_STAT)) {
+            } else if (Objects.requireNonNull(savedInstanceState.getString("KEY")).equals(MANGA_STAT)) {
                 Log.d(TAG, "onCreateKey4: " + MANGA_STAT);
                 getManga();
             }
@@ -223,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 //        ActivityOptionsCompat  options  = ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, imageView.getTransitionName());
 
-        intent.putExtra(String.valueOf(detail_activity.IMAGE_POSTER), (String) animes.get(pos).getPosterImage());
+        intent.putExtra(String.valueOf(detail_activity.IMAGE_POSTER), animes.get(pos).getPosterImage());
 //        bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle();
 //        context.startActivity(intent, options.toBundle());
 
@@ -241,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra(fragment_video.VIDEO_ID, animes.get(pos).getYoutubeVideoId());
 //        intent.putExtra(DetailsMovieActivtiy.MOVIE_ID, movies.get(pos).getid());
 
-        intent.putExtra(fragment_image.IMAGE_POSTER, (String) animes.get(pos).getPosterImage());
+        intent.putExtra(fragment_image.IMAGE_POSTER, animes.get(pos).getPosterImage());
 //        ActivityOptionsCompat options = ActivityOptionsCompat.
 //                makeSceneTransitionAnimation(this, (View)ivProfile, "profile");
 //        startActivity(intent, options.toBundle());
@@ -419,7 +418,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //I got this code from the site developer.android.com
         //use this link to show the wep site https://developer.android.com/training/basics/network-ops/managing
         connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        networkInfo = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        networkInfo = Objects.requireNonNull(connMgr).getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         isWifiConn = networkInfo.isConnected();
         Log.d(DEBUG_TAG, "Wifi connected: " + isWifiConn);
 

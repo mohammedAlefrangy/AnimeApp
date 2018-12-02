@@ -3,6 +3,7 @@ package com.example.hmod_.animeapp.fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.example.hmod_.animeapp.Activity.detail_activity;
 import com.example.hmod_.animeapp.NetWork.DateTimeHelper;
 import com.example.hmod_.animeapp.R;
+
+import java.util.Objects;
 
 public class fragment_detail extends Fragment {
     public static final String PREFERENCE_NAME = "com.example.hmod_.animeapp";
@@ -42,13 +45,13 @@ public class fragment_detail extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_fragment_detail, container, false);
-        intentThatStartedThisActivity = getActivity().getIntent();
+        intentThatStartedThisActivity = Objects.requireNonNull(getActivity()).getIntent();
 
-        ((detail_activity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((detail_activity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(((detail_activity) getActivity()).getSupportActionBar()).setHomeButtonEnabled(true);
+        Objects.requireNonNull(((detail_activity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
         collapsingToolbar = getActivity().findViewById(R.id.toolbar_layout);

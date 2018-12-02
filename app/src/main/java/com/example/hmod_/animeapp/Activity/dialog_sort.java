@@ -3,6 +3,7 @@ package com.example.hmod_.animeapp.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -11,14 +12,17 @@ import android.widget.Button;
 
 import com.example.hmod_.animeapp.R;
 
+import java.util.Objects;
+
 public class dialog_sort extends AppCompatDialogFragment {
     private Button ascending_order;
     private Button descending_order;
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 

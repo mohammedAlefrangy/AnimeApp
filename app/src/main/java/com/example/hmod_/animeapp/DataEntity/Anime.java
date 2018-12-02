@@ -1,6 +1,5 @@
 package com.example.hmod_.animeapp.DataEntity;
 
-import android.graphics.ColorSpace;
 import android.os.Parcel;
 import android.os.Parcelable;
 

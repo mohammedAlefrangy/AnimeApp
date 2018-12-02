@@ -3,6 +3,7 @@ package com.example.hmod_.animeapp.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import com.example.hmod_.animeapp.Activity.detail_activity;
 import com.example.hmod_.animeapp.MainActivity;
 import com.example.hmod_.animeapp.R;
+
+import java.util.Objects;
 
 public class fragment_video extends Fragment {
     Intent intentThatStartedThisActivity;
@@ -39,13 +42,13 @@ public class fragment_video extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_fragment_video, container, false);
-        intentThatStartedThisActivity = getActivity().getIntent();
+        intentThatStartedThisActivity = Objects.requireNonNull(getActivity()).getIntent();
 
-        ((detail_activity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((detail_activity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(((detail_activity) getActivity()).getSupportActionBar()).setHomeButtonEnabled(true);
+        Objects.requireNonNull(((detail_activity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
         collapsingToolbar = getActivity().findViewById(R.id.toolbar_layout);
@@ -54,7 +57,7 @@ public class fragment_video extends Fragment {
         TextView title = view.findViewById(R.id.title);
         cordinatorLayout = getActivity().findViewById(R.id.app_bar);
 
-        videoName = (TextView) view.findViewById(R.id.video_name);
+        videoName = view.findViewById(R.id.video_name);
 
 
         if (intentThatStartedThisActivity != null) {
@@ -84,7 +87,7 @@ public class fragment_video extends Fragment {
 //
         final String trailerURL = TRAILER_URL + videoId;
         Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerURL));
-        if (youtubeIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+        if (youtubeIntent.resolveActivity(Objects.requireNonNull(getActivity()).getPackageManager()) != null) {
             startActivity(youtubeIntent);
         }
     }

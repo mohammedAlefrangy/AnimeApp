@@ -12,7 +12,7 @@ public class DateTimeHelper {
 
     public static String parseDate(String dateTime) {
         try {
-            if (dateTime != null && !dateTime.isEmpty() && !dateTime.equalsIgnoreCase("")) {
+            if (dateTime != null && !dateTime.isEmpty()) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 SimpleDateFormat format2 = new SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH);
                 simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
