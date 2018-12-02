@@ -33,8 +33,9 @@ public final class NetworkUtils {
     private final static String ANIME = "/anime/";
 
     private static final String API_KEY_PARAM = "api_key";
-    //TODO (1) insert your api_key here
-    private static final String KEY = "366cf8abb96a69210ca41107bcbb421e";
+    //TODO (1) you should create account in https://apiary.io/ and get your api_ket and insert here
+    //TODO if you don't need create account you can use this api "366cf8abb96a69210ca41107bcbb421e"
+    private static final String KEY = "";
 
     public NetworkUtils() {
     }
