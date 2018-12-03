@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'Mohammed Alefrangy'
             keyPassword 'admin-+123'
-            storeFile file('C:/nanodegrees/Projects/MyProjects/Capstone-Project2/AnimeApp/keystore.jks')
+            storeFile file("$rootDir/keystore.jks")
             storePassword 'admin-+123'
         }
     }
