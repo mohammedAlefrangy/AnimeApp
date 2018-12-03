@@ -5,43 +5,39 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.opengl.Visibility;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.example.hmod_.animeapp.DataBase.FavoritesaAnimeEntity;
 import com.example.hmod_.animeapp.MainActivity;
 import com.example.hmod_.animeapp.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavAppWidgetProvider extends AppWidgetProvider {
     private static final String TAG = "FavAppWidgetProvider";
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, List<FavoritesaAnimeEntity>  favss,
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, List<FavoritesaAnimeEntity> favss,
                                 int appWidgetId) {
-        StringBuilder s =new StringBuilder();
+        StringBuilder s = new StringBuilder();
 
 
-         for (FavoritesaAnimeEntity  favs : favss  ){
+        for (FavoritesaAnimeEntity favs : favss) {
 
-            s.append( favs.getCanonicalTitle() + "\n");
+            s.append(favs.getCanonicalTitle() + "\n");
         }
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.anime_app_widget);
 
 
-        if (favss!=null){
-            if (favss.isEmpty()){
+        if (favss != null) {
+            if (favss.isEmpty()) {
                 views.setViewVisibility(R.id.empty, View.VISIBLE);
-                views.setViewVisibility(R.id.listFav,View.INVISIBLE);
+                views.setViewVisibility(R.id.listFav, View.INVISIBLE);
 
-            }else {
+            } else {
                 views.setViewVisibility(R.id.empty, View.INVISIBLE);
-                views.setViewVisibility(R.id.listFav,View.VISIBLE);
+                views.setViewVisibility(R.id.listFav, View.VISIBLE);
 
                 views.setTextViewText(R.id.listFav, s);
 
@@ -55,13 +51,9 @@ public class FavAppWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.listFav, pendingInetent);
 
 
-
-
-
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
-
 
 
     @Override
@@ -73,7 +65,7 @@ public class FavAppWidgetProvider extends AppWidgetProvider {
 
         for (int appWidgetId : appWidgetIds) {
 
-            updateAppWidget(context, appWidgetManager,favoritesaAnimeEntities, appWidgetId);
+            updateAppWidget(context, appWidgetManager, favoritesaAnimeEntities, appWidgetId);
         }
     }
 

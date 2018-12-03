@@ -24,7 +24,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ArrayList<Anime> animes;
     TextView movieTitle;
     private AdView mAdView;
-     static  int   positin;
+    static int positin;
     private String CURRUNT_STAT;
     private String ANIME_STAT = "anime";
     private String MANGA_STAT = "manga";
@@ -201,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onSaveInstanceState(Bundle outState) {
 
         outState.putString("KEY", CURRUNT_STAT);
-          positin = ((GridLayoutManager) (recyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
+        positin = ((GridLayoutManager) (recyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
         outState.putInt(SCROLL_POSITION_KEY, positin);
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceStatePositin: " + positin);
@@ -387,8 +386,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //if click on fav_anime item in menu the app show fav_anime
             case R.id.fav_anime:
                 getFavoritesMovies();
-                Log.d(TAG, "onNavigationItemSelected: "+favList.toString());
-                 break;
+                Log.d(TAG, "onNavigationItemSelected: " + favList.toString());
+                break;
 
             case R.id.about_me:
                 aboutMe();
@@ -540,7 +539,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (favMovieEntitiy == null)
                     return;
                 FavoritesaAnimeEntity[] courses = new FavoritesaAnimeEntity[favMovieEntitiy.size()];
-                for (int i = 0; i < favMovieEntitiy.size(); i++){
+                for (int i = 0; i < favMovieEntitiy.size(); i++) {
                     courses[i] = favMovieEntitiy.get(i);
 
                 }
@@ -555,11 +554,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
-    private void updateWidget(List<FavoritesaAnimeEntity>  animeEntities) {
+    private void updateWidget(List<FavoritesaAnimeEntity> animeEntities) {
         Log.d(may, "updateWidget: is is is " + animeEntities.toString());
 
-        AnimeWidgetServices.qstartActionUpdateWidgets(this,animeEntities);
+        AnimeWidgetServices.qstartActionUpdateWidgets(this, animeEntities);
     }
 
 }

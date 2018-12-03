@@ -9,12 +9,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.hmod_.animeapp.DataBase.FavoritesaAnimeEntity;
-import com.example.hmod_.animeapp.DataEntity.Anime;
-import com.example.hmod_.animeapp.MainActivity;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class AnimeWidgetServices extends IntentService {
@@ -53,10 +49,10 @@ public class AnimeWidgetServices extends IntentService {
     }
 
     private void handleActionUpdateWidgets(Context context) {
-         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, FavAppWidgetProvider.class));
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, FavAppWidgetProvider.class));
         //Now update all widgets
-         FavAppWidgetProvider.updateAppWidgetFav(context, appWidgetManager, mFav, appWidgetIds);
+        FavAppWidgetProvider.updateAppWidgetFav(context, appWidgetManager, mFav, appWidgetIds);
 
     }
 

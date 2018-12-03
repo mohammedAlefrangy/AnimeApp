@@ -72,7 +72,7 @@ public class VideoFragment extends Fragment {
                     if (videoId != null) {
                         openVedio();
                     } else {
-                        Toast.makeText(getContext(), "This element does not contain video because it is manga ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.noVideo, Toast.LENGTH_SHORT).show();
                     }
 
                 }

@@ -1,12 +1,11 @@
 package com.example.hmod_.animeapp.widget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
-
 
 import com.example.hmod_.animeapp.Adapter.AdapterForAnime;
 import com.example.hmod_.animeapp.DataBase.FavoritesaAnimeEntity;

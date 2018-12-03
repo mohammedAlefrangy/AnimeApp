@@ -31,7 +31,7 @@ public class dialog_sort extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.activity_dialog_sort, null);
         builder.setView(view)
                 // Add action buttons
-                .setTitle("Sort For Anime")
+                .setTitle(R.string.name_of_dialoge)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog_sort.this.getDialog().cancel();
