@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Favorite Anime"
+        android:text="@string/widget"
         android:textAlignment="center"
         android:textColor="@color/cardview_dark_background"
         android:textSize="20sp" />
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Click here to open anime app"
+        android:text="@string/buttonInWidget"
         android:background="@color/cardview_dark_background"
         android:layout_margin="10dp"
         android:padding="5dp"

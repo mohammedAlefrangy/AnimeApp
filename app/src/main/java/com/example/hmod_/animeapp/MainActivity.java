@@ -25,7 +25,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -43,9 +42,9 @@ import com.example.hmod_.animeapp.DataBase.ViewModel;
 import com.example.hmod_.animeapp.DataEntity.Anime;
 import com.example.hmod_.animeapp.NetWork.NetworkUtils;
 import com.example.hmod_.animeapp.NetWork.ParssJsonObject;
-import com.example.hmod_.animeapp.fragment.fragment_detail;
-import com.example.hmod_.animeapp.fragment.fragment_image;
-import com.example.hmod_.animeapp.fragment.fragment_video;
+import com.example.hmod_.animeapp.fragment.DetailsFragment;
+import com.example.hmod_.animeapp.fragment.ImageFragment;
+import com.example.hmod_.animeapp.fragment.VideoFragment;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         animeAdapter = new AdapterForAnime(animes, getApplicationContext(), onItemClickListener);
 //        recyclerView.setAdapter(animeAdapter);
 
-        int orientation = getResources().getConfiguration().orientation ;
+        int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // In landscape
             layoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (isWifiConn == true) {
             getAnime();
         } else {
-            Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.WifiOffline, Toast.LENGTH_SHORT).show();
         }
 
         // saveInstanceMethod method to scroll position the recycler view
@@ -231,17 +230,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra(detail_activity.MOVIE_ID, animes.get(pos).getId());
 
 
-        intent.putExtra(fragment_detail.CANONICAL_TITLE, animes.get(pos).getCanonicalTitle());
-        intent.putExtra(fragment_detail.SYNOSIS, animes.get(pos).getSynopsis());
-        intent.putExtra(fragment_detail.CREATED_AT, animes.get(pos).getCreatedAt());
-        intent.putExtra(String.valueOf(fragment_detail.USER_FAV), animes.get(pos).getFavoritesCount());
-        intent.putExtra(String.valueOf(fragment_detail.USER_COUNT), animes.get(pos).getUserCount());
+        intent.putExtra(DetailsFragment.CANONICAL_TITLE, animes.get(pos).getCanonicalTitle());
+        intent.putExtra(DetailsFragment.SYNOSIS, animes.get(pos).getSynopsis());
+        intent.putExtra(DetailsFragment.CREATED_AT, animes.get(pos).getCreatedAt());
+        intent.putExtra(String.valueOf(DetailsFragment.USER_FAV), animes.get(pos).getFavoritesCount());
+        intent.putExtra(String.valueOf(DetailsFragment.USER_COUNT), animes.get(pos).getUserCount());
 
-        intent.putExtra(fragment_video.CANONICAL_TITLE, animes.get(pos).getCanonicalTitle());
-        intent.putExtra(fragment_video.VIDEO_ID, animes.get(pos).getYoutubeVideoId());
+        intent.putExtra(VideoFragment.CANONICAL_TITLE, animes.get(pos).getCanonicalTitle());
+        intent.putExtra(VideoFragment.VIDEO_ID, animes.get(pos).getYoutubeVideoId());
 //        intent.putExtra(DetailsMovieActivtiy.MOVIE_ID, movies.get(pos).getid());
 
-        intent.putExtra(fragment_image.IMAGE_POSTER, animes.get(pos).getPosterImage());
+        intent.putExtra(ImageFragment.IMAGE_POSTER, animes.get(pos).getPosterImage());
 //        ActivityOptionsCompat options = ActivityOptionsCompat.
 //                makeSceneTransitionAnimation(this, (View)ivProfile, "profile");
 //        startActivity(intent, options.toBundle());
@@ -385,7 +384,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void aboutMe() {
-        String[] options = {"Facebook Acount", "Linkedin Acount" , "Github Acount" };
+        String[] options = {"Facebook Acount", "Linkedin Acount", "Github Acount"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("About Me");
         builder.setIcon(R.drawable.ic_information);
@@ -470,7 +469,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     recyclerView.scrollToPosition(mCurrentPostion);
 //                    animeAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.WifiOffline, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -489,7 +488,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fetchAnimeTask = new FetchAnimesTask();
             fetchAnimeTask.execute();
         } else {
-            Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.WifiOffline, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -505,7 +504,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fetchAnimeTask = new FetchAnimesTask();
             fetchAnimeTask.execute();
         } else {
-            Toast.makeText(MainActivity.this, "You Should check the internt connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.WifiOffline, Toast.LENGTH_SHORT).show();
         }
     }
 

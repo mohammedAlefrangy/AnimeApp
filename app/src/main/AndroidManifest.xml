@@ -20,7 +20,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|smallestScreenSize|uiMode">
+            android:configChanges="orientation|uiMode|smallestScreenSize|screenLayout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,9 +32,9 @@
         <activity
             android:name=".Activity.detail_activity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode" />
-        <activity android:name=".fragment.fragment_detail" />
-        <activity android:name=".fragment.fragment_image" />
-        <activity android:name=".fragment.fragment_video" />
+        <activity android:name=".fragment.DetailsFragment" />
+        <activity android:name=".fragment.ImageFragment" />
+        <activity android:name=".fragment.VideoFragment" />
 
         <receiver android:name=".widget.AnimeAppWidget">
             <intent-filter>

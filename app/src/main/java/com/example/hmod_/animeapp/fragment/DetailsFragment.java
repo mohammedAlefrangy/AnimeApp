@@ -19,7 +19,7 @@ import com.example.hmod_.animeapp.R;
 
 import java.util.Objects;
 
-public class fragment_detail extends Fragment {
+public class DetailsFragment extends Fragment {
     public static final String PREFERENCE_NAME = "com.example.hmod_.animeapp";
     private CollapsingToolbarLayout collapsingToolbar;
     private TextView cononical_title, synopsis, created_at, user_fav, user_count;

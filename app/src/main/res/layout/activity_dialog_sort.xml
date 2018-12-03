@@ -9,20 +9,20 @@
     <Button
         android:id="@+id/ascending_order"
         style="@style/buttonForDialoge"
-        android:text="Ascending Order" />
+        android:text="@string/Ascending_Order" />
 
     <Button
         android:id="@+id/descending_order"
         style="@style/buttonForDialoge"
-        android:text="Descending Order" />
+        android:text="@string/Descending_Order" />
 
     <Button
         android:id="@+id/follower_count"
         style="@style/buttonForDialoge"
-        android:text="Follower count" />
+        android:text="@string/Follower_count" />
 
     <Button
         android:id="@+id/following_count"
         style="@style/buttonForDialoge"
-        android:text="Following Count" />
+        android:text="@string/Following_Count" />
 </LinearLayout>

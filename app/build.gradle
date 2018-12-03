@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'Mohammed Alefrangy'
+            keyPassword 'admin-+123'
+            storeFile file('C:/nanodegrees/Projects/MyProjects/Capstone-Project2/AnimeApp/keystore.jks')
+            storePassword 'admin-+123'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.hmod_.animeapp"
@@ -15,16 +23,20 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation "com.android.support:customtabs:27.1.1"
+    implementation 'com.android.support:design:27.1.1'
+
+    implementation 'com.android.support:customtabs:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
@@ -36,27 +48,21 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:1.2.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
-
     //Android Architecture Components
     def room_version = "1.1.1"
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
-
     //LiveData
     def lifecycle_version = "1.1.1"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    def lifecycle_versionn = "2.0.0-beta01"
+    def lifecycle_versionn = "2.0.0"
     testImplementation "androidx.arch.core:core-testing:$lifecycle_versionn"
-
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-
     //espresso test
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
-
-
 }
 
 apply plugin: 'com.google.gms.google-services'

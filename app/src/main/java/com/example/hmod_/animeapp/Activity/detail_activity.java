@@ -20,9 +20,9 @@ import android.widget.ImageView;
 import com.example.hmod_.animeapp.DataBase.FavoritesMoviesDatabase;
 import com.example.hmod_.animeapp.DataBase.FavoritesaAnimeEntity;
 import com.example.hmod_.animeapp.R;
-import com.example.hmod_.animeapp.fragment.fragment_detail;
-import com.example.hmod_.animeapp.fragment.fragment_image;
-import com.example.hmod_.animeapp.fragment.fragment_video;
+import com.example.hmod_.animeapp.fragment.DetailsFragment;
+import com.example.hmod_.animeapp.fragment.ImageFragment;
+import com.example.hmod_.animeapp.fragment.VideoFragment;
 import com.squareup.picasso.Picasso;
 
 public class detail_activity extends AppCompatActivity {
@@ -132,13 +132,13 @@ public class detail_activity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new fragment_detail();
+                    return new DetailsFragment();
                 case 1:
-                    return new fragment_video();
+                    return new VideoFragment();
                 case 2:
-                    return new fragment_image();
+                    return new ImageFragment();
                 default:
-                    return new fragment_detail();
+                    return new DetailsFragment();
             }
 
         }

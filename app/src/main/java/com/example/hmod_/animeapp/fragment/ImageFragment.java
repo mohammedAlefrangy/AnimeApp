@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class fragment_image extends Fragment {
+public class ImageFragment extends Fragment {
 
     ArrayList<String> values;
     Intent intentThatStartedThisActivity;
@@ -32,10 +32,10 @@ public class fragment_image extends Fragment {
     private Context context;
     ImageView imageView;
 
-    public static fragment_image newInstance(ArrayList<String> values) {
+    public static ImageFragment newInstance(ArrayList<String> values) {
         Bundle args = new Bundle();
         args.putStringArrayList("images", values);
-        fragment_image fragment = new fragment_image();
+        ImageFragment fragment = new ImageFragment();
         fragment.setArguments(args);
         return fragment;
     }

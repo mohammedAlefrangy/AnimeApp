@@ -31,6 +31,15 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="favorite_anime">Favorite Anime</string>
+    <string name="WifiOffline">You Should check the internt connection</string>
+    <string name="favorite_button">Favorite Button</string>
+    <string name="imageforanimeposter">IconeForApp</string>
+    <string name="Ascending_Order">Ascending Order</string>
+    <string name="Descending_Order">Descending Order</string>
+    <string name="Follower_count">Follower count</string>
+    <string name="Following_Count">Following Count</string>
+    <string name="widget">Favorite Anime</string>
+    <string name="buttonInWidget">Click here to open anime app</string>
 
 
 </resources>

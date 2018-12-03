@@ -20,7 +20,7 @@ import com.example.hmod_.animeapp.R;
 
 import java.util.Objects;
 
-public class fragment_video extends Fragment {
+public class VideoFragment extends Fragment {
     Intent intentThatStartedThisActivity;
     public static final String VIDEO_ID = "videoID";
     public static final String CANONICAL_TITLE = "cononical_title";
