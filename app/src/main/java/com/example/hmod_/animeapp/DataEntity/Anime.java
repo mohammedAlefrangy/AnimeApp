@@ -122,7 +122,7 @@ public class Anime implements Parcelable {
         parcel.writeString(this.canonicalTitle);
         parcel.writeString(this.youtubeVideoId);
 
-//        parcel.writeValue(this.posterImage);/
+        parcel.writeValue(this.posterImage);
         parcel.writeValue(this.favoritesCount);
         parcel.writeValue(this.userCount);
     }
@@ -135,7 +135,7 @@ public class Anime implements Parcelable {
         this.canonicalTitle = in.readString();
         this.youtubeVideoId = in.readString();
 
-//        this.posterImage = in.readValue(Integer.class.getClassLoader());
+        this.posterImage = in.readString();
         this.favoritesCount = (Integer) in.readValue(Integer.class.getClassLoader());
         this.userCount = (Integer) in.readValue(Integer.class.getClassLoader());
 

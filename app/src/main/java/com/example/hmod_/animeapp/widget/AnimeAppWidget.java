@@ -32,10 +32,8 @@ public class AnimeAppWidget extends AppWidgetProvider {
         remoteViews = new RemoteViews(context.getPackageName(),
                 R.layout.anime_app_widget);
 
-        MainActivity mainActivity = new MainActivity();
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingInetent = PendingIntent.getActivity(context, 0, intent, 0);
-        remoteViews.setOnClickPendingIntent(R.id.showFav, pendingInetent);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);

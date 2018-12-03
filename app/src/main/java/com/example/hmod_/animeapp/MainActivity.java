@@ -24,6 +24,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -45,6 +46,7 @@ import com.example.hmod_.animeapp.NetWork.ParssJsonObject;
 import com.example.hmod_.animeapp.fragment.DetailsFragment;
 import com.example.hmod_.animeapp.fragment.ImageFragment;
 import com.example.hmod_.animeapp.fragment.VideoFragment;
+import com.example.hmod_.animeapp.widget.AnimeWidgetServices;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -61,7 +63,9 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterForAnime.OnItemClickListener {
     private DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
+    List<FavoritesaAnimeEntity> favList = new ArrayList<>();
     private static final String TAG = "MainActivity";
+    private static final String may = "ahhhhhhhhhhhhhh";
     ImageView imageView;
     ConnectivityManager connMgr;
     private static final String DEBUG_TAG = "NetworkStatusExample";
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ArrayList<Anime> animes;
     TextView movieTitle;
     private AdView mAdView;
-
+     static  int   positin;
     private String CURRUNT_STAT;
     private String ANIME_STAT = "anime";
     private String MANGA_STAT = "manga";
@@ -87,11 +91,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String SCROLL_POSITION_KEY = "scroll_position";
     private Parcelable mListState;
     private static int mCurrentPostion = 0;
-    private boolean m600MobileWidth;
 
 
     SharedPreferences sharedPreferences;
-    public static String YOUR_ACTION = "YourAction";
 
 
     @Override
@@ -197,10 +199,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+
         outState.putString("KEY", CURRUNT_STAT);
-        int positin = ((GridLayoutManager) (recyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
+          positin = ((GridLayoutManager) (recyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
         outState.putInt(SCROLL_POSITION_KEY, positin);
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceStatePositin: " + positin);
     }
 
     @Override
@@ -212,6 +216,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.d(TAG, "onRestoreInstanceState: " + mCurrentPostion);
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (recyclerView == null) {
+            fetchAnimeTask = new FetchAnimesTask();
+            fetchAnimeTask.execute();
+        }
+    }
+
+//    @Override
+//    public void gotItems(JSONArray items) {
+//        this.recyclerView = items;
+//        animeAdapter.swapModel(recyclerView, new boolean[recyclerView.length()]);
+//    }
 
     private void openMovieDetailsView(int pos) {
         Bundle bundle = null;
@@ -296,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        mCurrentPostion = 0;
         if (id == R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -368,7 +387,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //if click on fav_anime item in menu the app show fav_anime
             case R.id.fav_anime:
                 getFavoritesMovies();
-                break;
+                Log.d(TAG, "onNavigationItemSelected: "+favList.toString());
+                 break;
 
             case R.id.about_me:
                 aboutMe();
@@ -466,7 +486,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (animeFilm != null) {
                     animeAdapter.setTasks(animes);
                     Log.d(TAG, "onPostExecutemCurrentPostion: " + mCurrentPostion);
-                    recyclerView.scrollToPosition(mCurrentPostion);
+                    recyclerView.smoothScrollToPosition(mCurrentPostion);
 //                    animeAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(MainActivity.this, R.string.WifiOffline, Toast.LENGTH_SHORT).show();
@@ -520,13 +540,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (favMovieEntitiy == null)
                     return;
                 FavoritesaAnimeEntity[] courses = new FavoritesaAnimeEntity[favMovieEntitiy.size()];
-                for (int i = 0; i < favMovieEntitiy.size(); i++)
+                for (int i = 0; i < favMovieEntitiy.size(); i++){
                     courses[i] = favMovieEntitiy.get(i);
+
+                }
+
+                updateWidget(favMovieEntitiy);
+
+                Log.d(TAG, "onChanged: " + favList);
                 animeAdapter.addAllFavorites(favMovieEntitiy);
 
             }
         });
     }
 
+
+
+    private void updateWidget(List<FavoritesaAnimeEntity>  animeEntities) {
+        Log.d(may, "updateWidget: is is is " + animeEntities.toString());
+
+        AnimeWidgetServices.qstartActionUpdateWidgets(this,animeEntities);
+    }
 
 }

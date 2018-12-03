@@ -9,28 +9,31 @@
         android:layout_height="wrap_content"
         android:text="@string/widget"
         android:textAlignment="center"
-        android:textColor="@color/cardview_dark_background"
+        android:textColor="@color/cardview_dark_background"/>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty"
+        android:text="There is no Favoruite Item !"
+        android:textColor="@android:color/black"
+        android:layout_centerVertical="true"
+        android:textSize="30sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:id="@+id/listFav"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:layout_centerVertical="true"
         android:textSize="20sp" />
 
-    <!--<GridView-->
-        <!--android:id="@+id/gridView_widget"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:numColumns="auto_fit"-->
-        <!--android:layout_height="wrap_content" />-->
 
-    <Button
-        android:id="@+id/showFav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/buttonInWidget"
-        android:background="@color/cardview_dark_background"
-        android:layout_margin="10dp"
-        android:padding="5dp"
-        android:textStyle="italic"
-        android:fontFamily="serif"
-        android:textAllCaps="false"
-        />
+
+</RelativeLayout>
 
 </LinearLayout>
