@@ -43,6 +43,7 @@
     <string name="noItem">There is no Favoruite Item !</string>
     <string name="name_of_dialoge">Sort For Anime</string>
     <string name="noVideo">This element does not contain video because it is manga</string>
+    <string name="video">In Here you should icon for video</string>
 
 
 </resources>
