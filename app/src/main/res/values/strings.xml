@@ -40,6 +40,7 @@
     <string name="Following_Count">Following Count</string>
     <string name="widget">Favorite Anime</string>
     <string name="buttonInWidget">Click here to open anime app</string>
+    <string name="noItem">There is no Favoruite Item !</string>
 
 
 </resources>
