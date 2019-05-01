@@ -34,7 +34,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundImage" value="C:\Users\hmod_\Downloads\imagforanimeposter.png" />
+                                      <entry key="foregroundImage" value="C:\Users\hmod_\Downloads\iconfinder_theater-cinema-film-movie-audience-performance-entertainment-seats-furniture_and_household_3700476.png" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_app" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -62,8 +63,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="autoMirrored" value="true" />
-                            <entry key="outputName" value="ic_date" />
-                            <entry key="sourceFile" value="C:\Users\hmod_\Downloads\calendar-range.svg" />
+                            <entry key="outputName" value="ic_book_open_page_variant" />
+                            <entry key="sourceFile" value="C:\Users\hmod_\Downloads\book-open-page-variant.svg" />
                           </map>
                         </option>
                       </PersistentState>

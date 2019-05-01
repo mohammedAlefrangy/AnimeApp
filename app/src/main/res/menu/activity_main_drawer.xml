@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
+    <group android:checkableBehavior="single">
     <item
         android:id="@+id/anime"
         android:icon="@drawable/ic_movie"
@@ -9,18 +9,24 @@
 
     <item
         android:id="@+id/manga"
-        android:icon="@drawable/ic_filmstrip"
+        android:icon="@drawable/ic_book_open_page_variant"
         android:title="@string/manga" />
 
     <item
         android:id="@+id/fav_anime"
-        android:icon="@drawable/ic_heart"
+        android:icon="@drawable/ic_heart_half_full"
         android:title="@string/fav_anime" />
 
-    <item
-        android:id="@+id/about_me"
-        android:icon="@drawable/ic_information"
-        android:title="@string/about_me" />
+    </group>
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/about_me"
+                android:icon="@drawable/ic_information_outline"
+                android:title="@string/about_me" />
+        </menu>
+    </item>
 
 
 </menu>

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:677492765215:android:dfe2391f3efdd4eb",
         "android_client_info": {
-          "package_name": "com.example.hmod_.animeapp"
+          "package_name": "com.mohammed.hmod_.animeapp"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "677492765215-jljsuo0c7ku8887g792k2s8331o8d81j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.hmod_.animeapp",
+            "package_name": "com.mohammed.hmod_.animeapp",
             "certificate_hash": "07ecbbc684fc10b3230158d96c2f751ccf784414"
           }
         },
